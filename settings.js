@@ -4,6 +4,15 @@ var cb = {
 	siteLocalStorageKey: 'cb-abc-site',
 	usernameChromeStorageKey: 'codebase-username',
 
+	initPage: function(){
+		// If the user has already got a Codebase site map stored, then change the display of a couple of things
+		if(localStorage.getItem(cb.siteLocalStorageKey)){
+			$("#help, #re_build").removeClass("hidden");
+		}
+		// Set up everything else
+		$("form").each(cb.loadFormState).change(cb.storeFormState).submit(cb.settingsFormSubmit).find("#username").keypress(cb.storeFormState);
+	},
+
 	loadFormState: function(){
 		// The Chrome extension's "browser_action" popup dialogue is a bit annoying in that if you
 		// focus another window it disappears, and when you re-open it it doesn't keep its state
@@ -92,7 +101,7 @@ var cb = {
 			var site = cb.buildCodebaseSite(company, data);
 			localStorage.setItem(cb.siteLocalStorageKey, JSON.stringify(site));
 			log.success("Done!");
-			log.success("You can now use the 'cb' shortcut in the browser to get tab-completed URLs for codebase!");
+			log.success("You can now use the 'cb' shortcut in the address bar to get tab-completed URLs for codebase!");
 		}else{
 			log.error("Sorry, something went wrong.");
 			log.error("Maybe your Codebase credentials were incorrect?");
@@ -158,7 +167,7 @@ var cb = {
 	}
 };
 
-$("form").each(cb.loadFormState).change(cb.storeFormState).submit(cb.settingsFormSubmit).find("#username").keypress(cb.storeFormState);
+cb.initPage();
 
 var log = {
 	_log: $("#log"),

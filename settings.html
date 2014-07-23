@@ -11,6 +11,11 @@
 				font-size: 18px;
 				color: #38761d;
 			}
+			#help{
+				font-size: 12px;
+				margin-bottom: 15px;
+				color: #666;
+			}
 			form div{
 				margin-bottom: 10px;
 			}
@@ -52,10 +57,16 @@
 			.success{
 				color: #38a21d;
 			}
+			.hidden{
+				display: none;
+			}
 		</style>
 	</head>
 	<body>
 		<h1>Codebase URL Tab Completion</h1>
+
+		<div id="help" class="hidden">Type <em>cb<em> + <em>TAB</em> in the address bar to get URL suggestions.</div>
+
 		<form>
 			<div>
 				<label for="username">Codebase Username</label>
@@ -66,7 +77,7 @@
 				<input type="text" id="api_key" placeholder="" />
 			</div>
 			<div>
-				<button type="submit">Build my URLs!</button>
+				<button type="submit"><span id="re_build" class="hidden">Re-</span>Build my URLs!</button>
 			</div>
 		</form>
 		<div id="log"></div>
