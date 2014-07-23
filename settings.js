@@ -21,11 +21,12 @@ var cb = {
 
 	storeFormState: function(){
 		// See loadFormState for why this exists
-		log.log("Storing form state...");
 		var obj = {};
-		obj[cb.usernameChromeStorageKey] = $(this).find("#username").val();
+		// Allow this function to be called either on the form or on the username field directly
+		var $this = $(this);
+		var $username = $this.is("#username") ? $this : $this.find("#username");
+		obj[cb.usernameChromeStorageKey] = $username.val();
 		chrome.storage.sync.set(obj);
-		log.log("Stored form state");
 	},
 
 	settingsFormSubmit: function(){
@@ -157,7 +158,7 @@ var cb = {
 	}
 };
 
-$("form").each(cb.loadFormState).submit(cb.settingsFormSubmit);
+$("form").each(cb.loadFormState).change(cb.storeFormState).submit(cb.settingsFormSubmit).find("#username").keypress(cb.storeFormState);
 
 var log = {
 	_log: $("#log"),
