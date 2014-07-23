@@ -3,7 +3,7 @@
 
   "name": "Codebase Tab Completion",
   "description": "Adds tab completion to the address bar.",
-  "version": "1.0",
+  "version": "1.1",
   "author": "Adam Alton <adamalton@gmail.com>",
 
   "omnibox": { "keyword" : "cb" },
