@@ -7,8 +7,26 @@
 				min-width: 300px;
 				font-family: Arial, sans-serif;
 			}
+			form div{
+				margin-bottom: 10px;
+			}
 			label{
 				display: block;
+			}
+			form .error{
+				font-size: 12px;
+				padding:5px;
+			}
+			#log{
+				max-height: 100px;
+				font-size:12px;
+				overflow: auto;
+			}
+			.error{
+				color: red;
+			}
+			.success{
+				color: green;
 			}
 		</style>
 	</head>
@@ -20,11 +38,14 @@
 			</div>
 			<div>
 				<label for="api_key">Codebase API Key</label>
-				<input type="text" id="api_key" placeholder="abcd123" />
+				<input type="text" id="api_key" placeholder="" />
 			</div>
-
-			<button type="submit">Go!</button>
+			<div>
+				<button type="submit">Go!</button>
+			</div>
 		</form>
+		<div id="log"></div>
+
 		<script src="jquery-2.1.1.min.js"></script>
 		<script src="settings.js"></script>
 	</body>

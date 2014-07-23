@@ -1,17 +1,18 @@
 {
   "manifest_version": 2,
 
-  "name": "Address Bar Completion",
+  "name": "Codebase Tab Completion",
   "description": "Adds tab completion to the address bar.",
   "version": "1.0",
   "author": "Adam Alton <adamalton@gmail.com>",
 
-  "omnibox": { "keyword" : "abc" },
+  "omnibox": { "keyword" : "cb" },
   "background": {
     "scripts": ["abc.js"]
   },
   "permissions": [
-    "https://api3.codebasehq.com/"
+    "storage",
+    "https://api3.codebasehq.com/*"
   ],
   "browser_action": {
     "default_icon": "codebase.png",

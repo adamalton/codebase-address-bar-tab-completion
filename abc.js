@@ -3,7 +3,8 @@ var abc = {
 
 	DEAFULT_NUMBER_OF_SUGGESTIONS: 10,
 
-	storageKey: 'cb-abc-site', // The localStorage key where we store the user's codebase site info
+	// Using localstorage because chrome.storage is asynchronous which is a pain to code with
+	siteLocalStorageKey: 'cb-abc-site', // The localStorage key where we store the user's codebase site info
 	currentSite: null, // the site that we're basing our auto-completion on
 
 	onInputStarted: function(){
@@ -95,11 +96,11 @@ var abc = {
 
 function loadCurrentSite(){
 	// TODO: make this flexible so that we can have tab completion for other sites
-	var site = localStorage.getItem(abc.storageKey);
+	var site = localStorage.getItem(abc.siteLocalStorageKey);
 	if(!site){
-		alert("Please set your codebase settings before using the tab completion functionality.");
+		alert("Please set your codebase credentials via the button next to the address bar.");
 	}
-	return site;
+	return JSON.parse(site);
 }
 
 chrome.omnibox.onInputChanged.addListener(abc.onInputChanged);
