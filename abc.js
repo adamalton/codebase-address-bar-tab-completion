@@ -103,5 +103,70 @@ function loadCurrentSite(){
 	return codebaseSite; //loaded from test-site
 }
 
-
 console.log('Address Bar Completion plugin code loaded.');
+
+/*
+	EXAMPLE SITE
+
+	This is the format which the site map needs to be in.
+
+
+var site = {
+	name: "Codebase",
+	baseURL: "https://company-name.codebasehq.com",
+	tree: {
+		"/projects": [
+			"Projects",
+			{
+				"/projects/project-name": [
+					"Project Name",
+					{
+						"/projects/project-name/tickets": [
+							"Project Name Tickets", {}
+						],
+						"/projects/project-name/objects": [
+							"Project Name Objects", {}
+						],
+						"/projects/project-name/watching": [
+							"Project Name Notifications", {}
+						]
+					}
+				],
+				"/projects/my-other-project": [
+					"My Other Project",
+					{
+						"/projects/my-other-project/tickets": [
+							"My Other Project Tickets", {}
+						],
+						"/projects/my-other-project/objects": [
+							"My Other Project Objects", {}
+						],
+						"/projects/my-other-project/watching": [
+							"My Other Project Notifications", {}
+						]
+					}
+				]
+			}
+		],
+		"/logout": [
+			"Logout", {}
+		],
+		"/notifications": [
+			"Notifications", {}
+		],
+		"/search?q=": [
+			"Search (enter query)", {}
+		],
+		"/settings/profile": [
+			"My Profile", {}
+		],
+		"/settings/password": [
+			"Change My Password", {}
+		],
+		"/support": [
+			"Help &amp; Support", {}
+		]
+	}
+};
+
+*/
