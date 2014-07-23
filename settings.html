@@ -7,11 +7,34 @@
 				min-width: 300px;
 				font-family: Arial, sans-serif;
 			}
+			h1{
+				font-size: 18px;
+				color: #38761d;
+			}
 			form div{
 				margin-bottom: 10px;
 			}
 			label{
 				display: block;
+				font-size: 14px;
+			}
+			input{
+				border-radius:5px;
+				border: 1px solid #eee;
+				padding: 5px;
+				background: #f0f0f0;
+			}
+			input:focus, button:focus {
+				outline:none;
+				border: 1px solid #333;
+			}
+			button{
+				background: #38761d;
+				color: #fff;
+				border-radius:5px;
+				border: 1px solid #eee;
+				padding: 5px;
+				font-weight: bold;
 			}
 			form .error{
 				font-size: 12px;
@@ -26,11 +49,12 @@
 				color: red;
 			}
 			.success{
-				color: green;
+				color: #38a21d;
 			}
 		</style>
 	</head>
 	<body>
+		<h1>Codebase URL Tab Completion</h1>
 		<form>
 			<div>
 				<label for="username">Codebase Username</label>
@@ -41,7 +65,7 @@
 				<input type="text" id="api_key" placeholder="" />
 			</div>
 			<div>
-				<button type="submit">Go!</button>
+				<button type="submit">Build my URLs!</button>
 			</div>
 		</form>
 		<div id="log"></div>
