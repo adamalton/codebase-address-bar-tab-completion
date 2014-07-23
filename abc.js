@@ -3,6 +3,7 @@ var abc = {
 
 	DEAFULT_NUMBER_OF_SUGGESTIONS: 10,
 
+	storageKey: 'cb-abc-site', // The localStorage key where we store the user's codebase site info
 	currentSite: null, // the site that we're basing our auto-completion on
 
 	onInputStarted: function(){
@@ -92,16 +93,21 @@ var abc = {
 
 };
 
+function loadCurrentSite(){
+	// TODO: make this flexible so that we can have tab completion for other sites
+	var site = localStorage.getItem(abc.storageKey);
+	if(!site){
+		alert("Please set your codebase settings before using the tab completion functionality.");
+	}
+	return site;
+}
 
 chrome.omnibox.onInputChanged.addListener(abc.onInputChanged);
 chrome.omnibox.onInputEntered.addListener(abc.onInputEntered);
 chrome.omnibox.onInputStarted.addListener(abc.onInputStarted);
 
 
-function loadCurrentSite(){
-	// TODO: make this flexible so that we can have tab completion for other sites
-	return codebaseSite; //loaded from test-site
-}
+
 
 console.log('Address Bar Completion plugin code loaded.');
 
