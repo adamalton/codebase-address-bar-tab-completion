@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+
+  "name": "Address Bar Completion",
+  "description": "Adds tab completion to the address bar.",
+  "version": "1.0",
+  "author": "Adam Alton <adamalton@gmail.com>",
+
+  "omnibox": { "keyword" : "abc" },
+  "background": {
+    "scripts": ["test-site.js", "abc.js"]
+  }
+
+}
