@@ -99,7 +99,7 @@ var cb = {
 			log.log("Got successful response from Codebase API.");
 			var company = username.split("/")[0];
 			var site = cb.buildCodebaseSite(company, data);
-			localStorage.setItem(cb.siteLocalStorageKey, JSON.stringify(site));
+			localStorage.setItem(cb.siteLocalStorageKey, JSONX.stringify(site));
 			log.success("Done!");
 			log.success("You can now use the 'cb' shortcut in the address bar to get tab-completed URLs for codebase!");
 		}else{
@@ -111,43 +111,46 @@ var cb = {
 
 
 	buildCodebaseSite: function(company, projects_dom){
-		log.log("Building codebase URL tree...");
+		log.log("Building codebase URL list...");
 		var site = {
 			name: "Codebase",
 			baseURL: "https://" + company + ".codebasehq.com",
-			tree: {
-				"/projects": [
-					"Projects"
-				// This will be populated from the `projects_dom` from the API response
-				],
-
-				// Standard site map for the rest of the codebase site
-				"/logout": [
-					"Logout", {}
-				],
-				"/notifications": [
-					"Notifications", {}
-				],
-				"/search?q=": [
-					"Search (enter query)", {}
-				],
-				"/settings/profile": [
-					"My Profile", {}
-				],
-				"/settings/password": [
-					"Change My Password", {}
-				],
-				"/support": [
-					"Help &amp; Support", {}
-				]
-			}
+			paths: [
+				{
+					url: "/Logout",
+					title: "Logout"
+				},
+				{
+					url: "/notifications",
+					title: "Notifications"
+				},
+				{
+					url: "/settings/profile",
+					title: "My Profile"
+				},
+				{
+					url: "/settings/password",
+					title: "Change My Password"
+				},
+				{				
+					url: "/support",
+					title: "Help &amp; Support"
+				},
+				{
+					url_parts: ["/search?q=", /.+/],
+					title: "Search for {0}"
+				}
+			]
 		};
-		site.tree["/projects"][1] = cb.buildProjectsTree(projects_dom);
+		site.paths.concat(cb.buildProjectPaths(projects_dom));
+		log.log("site:");
+		log.log(JSONX.stringify(site));
+
 		return site;
 	},
 
-	buildProjectsTree: function(projects_dom){
-		var tree = {};
+	buildProjectPaths: function(projects_dom){
+		var paths = [];
 		var $dom = $(projects_dom);
 		$dom.find("project").each(function(){
 			var $project = $(this);
@@ -156,18 +159,50 @@ var cb = {
 			}
 			var name = $project.find("name").eq(0).text();
 			var slug = $project.find("permalink").eq(0).text();
-			var urls = {};
-			urls["/projects/" + slug + "/tickets"] = [name + " Tickets", {}];
-			urls["/projects/" + slug + "/objects"] = [name + " Objects", {}];
-			urls["/projects/" + slug + "/repositories"] = [name + " Repositories", {}];
-			urls["/projects/" + slug + "/watching"] = [name + " Watching", {}];
-			tree["/projects/" + slug] = [name, urls];
+			paths.concat([
+				{
+					url: "/projects/" + slug + "/overview",
+					title: name + " Overview"
+				},
+				{
+					url: "/projects/" + slug + "/tickets",
+					title: name + " Tickets"
+				},
+				{
+					url: "/projects/" + slug + "/tickets?report=open",
+					title: name + " Open Tickets"
+				},
+				{
+					url: "/projects/" + slug + "/tickets/new",
+					title: name + " New Ticket"
+				},
+				{
+					url_parts: ["/projects/" + slug + "/tickets/", /\d+/],
+					title: name + " Tickets"
+				},
+				{
+					url: "/projects/" + slug + "/repositories",
+					title: name + " Repositories"
+				},
+				{
+					url: "/projects/" + slug + "/watching",
+					title: name + " Notification Settings"
+				},
+				{
+					url: "/projects/" + slug + "/assignments",
+					title: name + " User Assignments"
+				},
+				{
+					url: "/projects/" + slug + "/objects",
+					title: name + " Organisational Objects"
+				}
+			]);
+			
 		});
-		return tree;
+		log.log(paths);
+		return paths;
 	}
 };
-
-cb.initPage();
 
 var log = {
 	_log: $("#log"),
@@ -192,3 +227,5 @@ var log = {
 		log._log.html('');
 	}
 };
+
+cb.initPage();
