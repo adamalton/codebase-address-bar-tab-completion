@@ -8,7 +8,7 @@
 
   "omnibox": { "keyword" : "ff" },
   "background": {
-    "scripts": ["abc.js"]
+    "scripts": ["jsonx.js", "abc.js"]
   },
   "permissions": [
     "storage",
