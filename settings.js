@@ -117,32 +117,32 @@ var cb = {
 			baseURL: "https://" + company + ".codebasehq.com",
 			paths: [
 				{
-					url: "/Logout",
+					path: "/Logout",
 					title: "Logout"
 				},
 				{
-					url: "/notifications",
+					path: "/notifications",
 					title: "Notifications"
 				},
 				{
-					url: "/settings/profile",
+					path: "/settings/profile",
 					title: "My Profile"
 				},
 				{
-					url: "/settings/password",
+					path: "/settings/password",
 					title: "Change My Password"
 				},
 				{				
-					url: "/support",
+					path: "/support",
 					title: "Help &amp; Support"
 				},
 				{
-					url_parts: ["/search?q=", /.+/],
+					path_parts: ["/search?q=", /.+/],
 					title: "Search for {0}"
 				}
 			]
 		};
-		site.paths.concat(cb.buildProjectPaths(projects_dom));
+		site.paths = site.paths.concat(cb.buildProjectPaths(projects_dom));
 		log.log("site:");
 		log.log(JSONX.stringify(site));
 
@@ -159,41 +159,41 @@ var cb = {
 			}
 			var name = $project.find("name").eq(0).text();
 			var slug = $project.find("permalink").eq(0).text();
-			paths.concat([
+			paths = paths.concat([
 				{
-					url: "/projects/" + slug + "/overview",
+					path: "/projects/" + slug + "/overview",
 					title: name + " Overview"
 				},
 				{
-					url: "/projects/" + slug + "/tickets",
+					path: "/projects/" + slug + "/tickets",
 					title: name + " Tickets"
 				},
 				{
-					url: "/projects/" + slug + "/tickets?report=open",
+					path: "/projects/" + slug + "/tickets?report=open",
 					title: name + " Open Tickets"
 				},
 				{
-					url: "/projects/" + slug + "/tickets/new",
+					path: "/projects/" + slug + "/tickets/new",
 					title: name + " New Ticket"
 				},
 				{
-					url_parts: ["/projects/" + slug + "/tickets/", /\d+/],
+					path_parts: ["/projects/" + slug + "/tickets/", /\d+/],
 					title: name + " Tickets"
 				},
 				{
-					url: "/projects/" + slug + "/repositories",
+					path: "/projects/" + slug + "/repositories",
 					title: name + " Repositories"
 				},
 				{
-					url: "/projects/" + slug + "/watching",
+					path: "/projects/" + slug + "/watching",
 					title: name + " Notification Settings"
 				},
 				{
-					url: "/projects/" + slug + "/assignments",
+					path: "/projects/" + slug + "/assignments",
 					title: name + " User Assignments"
 				},
 				{
-					url: "/projects/" + slug + "/objects",
+					path: "/projects/" + slug + "/objects",
 					title: name + " Organisational Objects"
 				}
 			]);
