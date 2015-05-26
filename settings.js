@@ -132,13 +132,14 @@ var cb = {
 					path: "/settings/password",
 					title: "Change My Password"
 				},
-				{				
+				{
 					path: "/support",
 					title: "Help &amp; Support"
 				},
 				{
 					path_parts: ["/search?q=", /.+/],
-					title: "Search for {0}"
+					title: "Search for {0}",
+					priority: 0,
 				}
 			]
 		};
@@ -197,7 +198,7 @@ var cb = {
 					title: name + " Organisational Objects"
 				}
 			]);
-			
+
 		});
 		log.log(paths);
 		return paths;

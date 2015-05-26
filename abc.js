@@ -68,25 +68,40 @@ var abc = {
 				}
 			}
 			if(score){
-				matches.push([
-					score,
-					abc.buildURLFromParts(abc.currentSite.baseURL, path_parts, regex_part_matches),
-					abc.buildTitleFromParts(site_path.title, regex_part_matches)
-				]);
+				matches.push({
+					score: score,
+					priority: typeof(site_path.priority) == "undefined" ? 1 : site_path.priority,
+					url: abc.buildURLFromParts(abc.currentSite.baseURL, path_parts, regex_part_matches),
+					title: abc.buildTitleFromParts(site_path.title, regex_part_matches)
+				});
 			}
 		}
 		// Now sort our matches by score, highest score first, i.e. reverse order
-		matches.sort(function(a, b){ return b[0] - a[0]; });
-		for(var i=0; i<matches.length; i++){
+		console.log("pre-sorting matches");
+		console.log(matches);
+		matches.sort(abc.matchComparison);
+		for(var i=0; i<matches.length && i<limit; i++){
 			var match = matches[i];
-			suggestions.push(abc.formatSuggestion(match[1], match[2]));
+			if(i === 0){
+				default_suggestion = abc.formatDefaultSuggestion(match.url, match.title);
+				continue;
+			}
+			suggestions.push(abc.formatSuggestion(match.url, match.title));
 		}
-		if(matches.length){
-			default_suggestion = abc.formatDefaultSuggestion(matches[0][1], matches[0][2]);
-		}
+		console.log("post-sorting matches");
+		console.log(matches);
 		console.log('suggestions');
 		console.log(suggestions);
 		return [suggestions, default_suggestion];
+	},
+
+	matchComparison: function(a, b){
+		// The matches should be sorted highest score first (i.e. descending), using the `priority`
+		// to distinguish any with the same score
+		if(a.score === b.score){
+			return b.priority - a.priority;
+		}
+		return b.score - a.score;
 	},
 
 	buildURLFromParts: function(base_url, path_parts, regex_part_matches){
@@ -181,6 +196,11 @@ var site = {
 		{
 			path_parts: ["/search?q=", /.+/],
 			title: "Search for {0}"
+		},
+		{
+			path: "/Logout",
+			title: "Logout",
+			priority: 0
 		}
 	]
 };
