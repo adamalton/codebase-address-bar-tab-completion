@@ -75,18 +75,20 @@ var abc = {
 				]);
 			}
 		}
+		// Now sort our matches by score, highest score first, i.e. reverse order
+		matches.sort(function(a, b){ return b[0] - a[0]; });
 		for(var i=0; i<matches.length; i++){
 			var match = matches[i];
 			suggestions.push(abc.formatSuggestion(match[1], match[2]));
 		}
 		if(matches.length){
-			default_suggestion = abc.formatDefaultSuggestion(match[1], match[2]);
+			default_suggestion = abc.formatDefaultSuggestion(matches[0][1], matches[0][2]);
 		}
 		console.log('suggestions');
 		console.log(suggestions);
 		return [suggestions, default_suggestion];
 	},
-	
+
 	buildURLFromParts: function(base_url, path_parts, regex_part_matches){
 		// given the base URL of the site (i.e. http://domain) plus the parts of the path and an
 		// array of the bits of the search query which matched the regex parts of the path, put
@@ -103,7 +105,7 @@ var abc = {
 		}
 		return url;
 	},
-	
+
 	buildTitleFromParts: function(title, regex_part_matches){
 		// URL titles can be given in the format "Search for {0} on Carrot Site", this formats
 		// the title using the matched regex parts from the search query
@@ -111,7 +113,7 @@ var abc = {
 		// TODO
 		var parts = title.split(/\{\d+\}/g);
 		return title.formatUnicorn(regex_part_matches);
-	},		
+	},
 
 	formatSuggestion: function(url, description){
 		// Turn the given URL and description into a suggestion object for Chrome.
@@ -124,7 +126,6 @@ var abc = {
 	formatDefaultSuggestion: function(url, description, include_content){
 		// Turn the given URL and description into a suggestion object for chrome.omnibox.setDefaultSuggestion.
 		return {
-			url: url,
 			description: '<url>' + url + '</url> ' + description + ' <dim> - ' + abc.currentSite.name + '</dim>'
 		};
 	},
@@ -182,6 +183,6 @@ var site = {
 			title: "Search for {0}"
 		}
 	]
-};	
+};
 
 */
